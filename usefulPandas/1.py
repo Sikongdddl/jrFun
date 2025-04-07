@@ -2,7 +2,7 @@ import pandas as pd
 
 # 假设你的数据已经在一个CSV文件中，或者你可以直接创建一个DataFrame
 
-file_path = "1.xlsx"
+file_path = "2.xlsx"
 df = pd.read_excel(file_path)
 
 # 计算每位老师的开课学院排名百分比和学科大类排名百分比的平均值
@@ -21,5 +21,5 @@ for index, row in avg_values.iterrows():
     df.at[first_index, '开课学院排名平均值'] = avg_college_rank
     df.at[first_index, '学科大类排名平均值'] = avg_major_rank
 
-output_file_path = 'processed.xlsx'
+output_file_path = 'processed2.xlsx'
 df.to_excel(output_file_path)

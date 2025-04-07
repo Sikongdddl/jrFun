@@ -1,13 +1,11 @@
 #Todo:
 #目前minimaxAI无法必胜人类先手（存在轨迹LL-LL-LR-LL-RL-RL-Rl-Rl-RL-RR先手获胜）
-#1.探索有无必胜策略 待定 未得出理想解法
+#1.探索有无必胜策略 无必胜初始条件 但得到了初步的value function 有助于RL收敛 
 #2.加入robust：探索到死循环（即陷入斐波那契数列）时提前终止
-#3.模拟采样探索有无后手必胜轨迹
-#4.实现RL agent
-#5.RL agent vs minimax
-#6.RL agent vs man
-#7.RL agent vs RL agent
-#8.可视化 上线测试供游玩
+#3.实现RL agent
+#4.RL agent vs man
+#5.RL agent vs RL agent
+#6.可视化 上线测试供游玩
 import math
 
 class HandGame:

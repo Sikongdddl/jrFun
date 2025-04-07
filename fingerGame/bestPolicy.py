@@ -2,7 +2,7 @@
 # 1vs1局面：player_hands = 1, opponent_hands = 1
 # 2vs1局面：必胜条件为进入1vs1局面的必胜起始状态:player_hands = [1,1], opponent_hands = [1,0]
 # 在蒙特卡洛采样模拟下得到了每个起始状态的value function 没有发现稳定为1的状态 所有稳定为-1的状态也都是平凡解 由此可以得出结论：
-# 2vs1局面不存在必胜起始条件 而value function有助于2vs2局面下的决策（如果能进入一个好的2vs1局面就进入，否则不进入）
+# 2vs1局面不存在必胜起始条件 因此2vs2也不存在必胜起始条件 而value function有助于2vs2局面下的决策（如果能进入一个好的2vs1局面就进入，否则不进入）
 import numpy as np
 class HandGame11:
     def __init__(self,player_hands,opponent_hands,current_player):
@@ -70,8 +70,6 @@ class HandGame21:
         print(f"玩家1: 左({self.player_left_hand}) 右({self.player_right_hand})")
         print(f"玩家2: {self.opponent_hand}")
 
-
-
 def get1versus1Status():
     states = np.zeros((9,9))
     #1 means player wins, -1 means opponent wins, 0 means draw
@@ -90,7 +88,7 @@ def get1versus1Status():
                 states[i-1,j-1] = 0
     return states
 
-def get2versus1Status(status_11,status_21,i,j,k):
+def get2versus1StatusEntry(status_11,status_21,i,j,k):
     #1 means player wins, -1 means opponent wins, 0 means draw 
     game = HandGame21([i,j],[k],0)
     while not game.is_game_over():
@@ -137,7 +135,7 @@ def get2versus1Status(status_11,status_21,i,j,k):
     status_21[i-1][j-1][k-1] += ret
     return status_21
 
-if __name__ == "__main__":
+def get2versus1Status():
     sum = 0
     num_epoch = 10000
     status_11 = get1versus1Status()
@@ -147,9 +145,12 @@ if __name__ == "__main__":
         for j in range(1,10):
             for k in range(1,10):
                 for epoch in range(num_epoch):
-                    status_21 = get2versus1Status(status_11,status_21,i,j,k)
+                    status_21 = get2versus1StatusEntry(status_11,status_21,i,j,k)
     
     status_21 = status_21 / num_epoch
     for i in range(status_21.shape[2]):
         slice_data = status_21[:,:,i]
         np.savetxt(f"./log/opponent_{i+1}.txt",slice_data,fmt='%.6f',delimiter="\t")
+
+if __name__ == "__main__":
+    print("hello,world!")
